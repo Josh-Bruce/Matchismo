@@ -7,13 +7,25 @@
 //
 
 #import "CardGameViewController.h"
+#import "PlayingCardDeck.h"
 
 @interface CardGameViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (nonatomic) int flipCount;
+@property (strong, nonatomic) PlayingCardDeck *deck;
 @end
 
 @implementation CardGameViewController
+
+// Lazy instantiate our PlayingCardDeck
+- (PlayingCardDeck *)deck
+{
+    if (!_deck) {
+        _deck = [[PlayingCardDeck alloc] init];
+    }
+    
+    return _deck;
+}
 
 - (void)setFlipCount:(int)flipCount
 {
@@ -27,8 +39,17 @@
 {
     // Toggle the selected state of the card
     sender.selected = !sender.isSelected;
-    // Increment the flipCount by 1, calls the Getter and Setter
-    self.flipCount++;
+    
+    if (sender.selected) {
+        // Draw a random card from our deck of cards
+        Card *card = [self.deck drawRandomCard];
+        if (card) {
+            // Increment the flipCount by 1, calls the Getter and Setter
+            self.flipCount++;
+            // Set the title of the selected card to be our playing card
+            [sender setTitle:[card contents] forState:UIControlStateSelected];
+        }
+    }
 }
 
 @end
