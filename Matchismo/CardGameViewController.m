@@ -13,6 +13,7 @@
 @interface CardGameViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lastFlipResult;
 @property (nonatomic) int flipCount;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
@@ -20,6 +21,7 @@
 
 @implementation CardGameViewController
 
+// Lazy instantiation of our game
 - (CardMatchingGame *)game
 {
     if (!_game) {
@@ -58,8 +60,21 @@
 
 - (IBAction)flipCard:(UIButton *)sender
 {
+    // Flip a new card with the index of our sender card
     [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
+    // Incremenet out flip countere
     self.flipCount++;
+    // Update our UI
+    [self updateUI];
+}
+
+- (IBAction)dealNewGame:(UIButton *)sender
+{
+    // Create a new game by alloc and init a new set of cards
+    self.game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[[PlayingCardDeck alloc] init]];
+    // Set our flipcount to 0
+    self.flipCount = 0;
+    // Update our UI
     [self updateUI];
 }
 
