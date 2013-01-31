@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastFlipResult;
+@property (weak, nonatomic) IBOutlet UISwitch *gameDifficultySwitch;
 @property (nonatomic) int flipCount;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
@@ -101,6 +102,13 @@
     self.lastFlipResult.text = nil;
     // Update our UI
     [self updateUI];
+    // Enable user to toggle the game difficulty after dealing
+    
+}
+
+- (IBAction)toggleGameType:(UISwitch *)sender
+{
+
 }
 
 @end

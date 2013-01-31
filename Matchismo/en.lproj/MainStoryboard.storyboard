@@ -45,7 +45,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Flips: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XOu-HG-Iub">
-                                <rect key="frame" x="20" y="419" width="90" height="21"/>
+                                <rect key="frame" x="20" y="380" width="90" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -276,7 +276,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Score: 0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dBe-Dk-yjT">
-                                <rect key="frame" x="210" y="419" width="90" height="21"/>
+                                <rect key="frame" x="210" y="380" width="90" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -290,7 +290,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="GTm-wZ-9Wa">
-                                <rect key="frame" x="132" y="404" width="56" height="37"/>
+                                <rect key="frame" x="128" y="380" width="64" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Deal">
@@ -304,11 +304,26 @@
                                     <action selector="dealNewGame:" destination="2" eventType="touchUpInside" id="EiX-zp-Nue"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="GgP-qV-hue">
+                                <rect key="frame" x="223" y="424" width="79" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="toggleGameType:" destination="2" eventType="valueChanged" id="Mym-uH-1KJ"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Change game difficulty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rEp-m6-ihD">
+                                <rect key="frame" x="20" y="427" width="173" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="flipsLabel" destination="XOu-HG-Iub" id="iBn-pQ-SNF"/>
+                        <outlet property="gameDifficultySwitch" destination="GgP-qV-hue" id="4WD-Hg-w3w"/>
                         <outlet property="lastFlipResult" destination="BxW-WG-vVt" id="sOz-v7-Ah7"/>
                         <outlet property="scoreLabel" destination="dBe-Dk-yjT" id="Vff-vl-EYN"/>
                         <outletCollection property="cardButtons" destination="Rmh-yi-w0i" id="TIO-Hb-MFl"/>
@@ -340,7 +355,9 @@
             <relationships>
                 <relationship kind="action" name="dealNewGame:" candidateClass="UIButton"/>
                 <relationship kind="action" name="flipCard:" candidateClass="UIButton"/>
+                <relationship kind="action" name="toggleGameType:" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="flipsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="gameDifficultySwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="lastFlipResult" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
                 <relationship kind="outletCollection" name="cardButtons" candidateClass="UIButton"/>
