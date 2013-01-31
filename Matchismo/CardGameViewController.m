@@ -47,6 +47,8 @@
     self.flipCount = 0;
     // Set the textlabel to nil
     self.lastFlipResult.text = nil;
+    // Set the difficulty button back to default
+    self.gameDifficultySwitch.on = NO;
     // Enable user to toggle the game difficulty after dealing
     self.gameDifficultySwitch.enabled = YES;
     // Change our max value of our slider
@@ -142,15 +144,21 @@
 
 - (IBAction)dealNewGame:(UIButton *)sender
 {
-    // Update our UI
-    [self updateUI];
     // Reset our game settings
     [self resetGame];
+    // Update our UI
+    [self updateUI];
 }
 
 - (IBAction)toggleGameType:(UISwitch *)sender
 {
-
+    if (sender.isOn) {
+        // Turn the 3 match game on (Harder)
+        self.game.threeCardMatch = YES;
+    } else {
+        // Turn the 3 match game off (Easier)
+        self.game.threeCardMatch = NO;
+    }
 }
 
 - (IBAction)viewHistory:(UISlider *)sender

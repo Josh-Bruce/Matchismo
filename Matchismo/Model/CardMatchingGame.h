@@ -12,6 +12,7 @@
 
 @interface CardMatchingGame : NSObject
 
+@property (nonatomic, getter=isThreeCardMatch) BOOL threeCardMatch;
 @property (readonly, nonatomic) int score;
 @property (readonly, nonatomic) int pointsScored;
 @property (strong, nonatomic) NSMutableArray *lastFlip;
