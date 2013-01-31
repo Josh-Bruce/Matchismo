@@ -11,6 +11,7 @@
 @interface CardMatchingGame ()
 @property (readwrite, nonatomic) int score;
 @property (readwrite, nonatomic) int pointsScored;
+@property (nonatomic) int historyCount;
 @property (strong, nonatomic) NSMutableArray *cards; // of Card
 @end
 
@@ -35,6 +36,15 @@
     return _lastFlip;
 }
 
+- (NSMutableDictionary *)flipHistory
+{
+    if (!_flipHistory) {
+        _flipHistory = [[NSMutableDictionary alloc] init];
+    }
+    
+    return _flipHistory;
+}
+
 #define MATCH_BONUS 4
 #define MISMATCH_PENALTY 2
 #define FLIP_COST 1
@@ -54,19 +64,25 @@
                         self.score += matchScore * MATCH_BONUS;
                         self.pointsScored = matchScore * MATCH_BONUS;
                         [self.lastFlip addObjectsFromArray:@[card.contents, otherCard.contents]];
+                        [self.flipHistory setValue:@[card, otherCard] forKey:[NSString stringWithFormat:@"%d", self.historyCount]];
+                        self.historyCount++;
                     } else {
                         otherCard.faceUp = NO;
                         self.score -= MISMATCH_PENALTY;
                         self.pointsScored = MISMATCH_PENALTY;
                         [self.lastFlip addObjectsFromArray:@[card.contents, otherCard.contents]];
+                        [self.flipHistory setValue:@[card, otherCard] forKey:[NSString stringWithFormat:@"%d", self.historyCount]];
+                        self.historyCount++;
                     }
                     break;
                 }
             }
             self.score -= FLIP_COST;
             if (![self.lastFlip count]) {
-                [self.lastFlip addObject:card.contents];
                 self.pointsScored = FLIP_COST;
+                [self.lastFlip addObject:card.contents];
+                [self.flipHistory setValue:@[card] forKey:[NSString stringWithFormat:@"%d", self.historyCount]];
+                self.historyCount++;
             }
         }
         card.faceUp = !card.isFaceUp;

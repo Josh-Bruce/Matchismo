@@ -311,19 +311,20 @@
                                     <action selector="toggleGameType:" destination="2" eventType="valueChanged" id="Mym-uH-1KJ"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="3 Card Match Game" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rEp-m6-ihD">
-                                <rect key="frame" x="20" y="427" width="154" height="21"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="0.0" id="J6Q-js-B39">
+                                <rect key="frame" x="18" y="427" width="176" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <connections>
+                                    <action selector="viewHistory:" destination="2" eventType="valueChanged" id="aXD-6k-hsr"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="flipsLabel" destination="XOu-HG-Iub" id="iBn-pQ-SNF"/>
                         <outlet property="gameDifficultySwitch" destination="GgP-qV-hue" id="4WD-Hg-w3w"/>
+                        <outlet property="historySlider" destination="J6Q-js-B39" id="jmt-tZ-4Vo"/>
                         <outlet property="lastFlipResult" destination="BxW-WG-vVt" id="sOz-v7-Ah7"/>
                         <outlet property="scoreLabel" destination="dBe-Dk-yjT" id="Vff-vl-EYN"/>
                         <outletCollection property="cardButtons" destination="Rmh-yi-w0i" id="TIO-Hb-MFl"/>
@@ -356,8 +357,10 @@
                 <relationship kind="action" name="dealNewGame:" candidateClass="UIButton"/>
                 <relationship kind="action" name="flipCard:" candidateClass="UIButton"/>
                 <relationship kind="action" name="toggleGameType:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="viewHistory:" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="flipsLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="gameDifficultySwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="historySlider" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="lastFlipResult" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
                 <relationship kind="outletCollection" name="cardButtons" candidateClass="UIButton"/>

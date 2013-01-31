@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastFlipResult;
+@property (weak, nonatomic) IBOutlet UISlider *historySlider;
 @property (weak, nonatomic) IBOutlet UISwitch *gameDifficultySwitch;
 @property (nonatomic) int flipCount;
 @property (strong, nonatomic) CardMatchingGame *game;
@@ -61,16 +62,27 @@
     // Using the cards in an NSMutableArray inserted by the model and displaying their points
     if ([self.game.lastFlip count] && self.game.pointsScored == 16) {
         self.lastFlipResult.text = [NSString stringWithFormat:@"Matched %@%@%d%@", [self.game.lastFlip componentsJoinedByString:@" & "], @"for ", self.game.pointsScored, @" points"];
-        [self.game.lastFlip removeAllObjects];
     } else if ([self.game.lastFlip count] && self.game.pointsScored == 4) {
         self.lastFlipResult.text = [NSString stringWithFormat:@"Matched %@%@%d%@", [self.game.lastFlip componentsJoinedByString:@" & "], @"for ", self.game.pointsScored, @" points"];
-        [self.game.lastFlip removeAllObjects];
     } else if ([self.game.lastFlip count] && self.game.pointsScored == 2) {
         self.lastFlipResult.text = [NSString stringWithFormat:@"%@%@%d%@", [self.game.lastFlip componentsJoinedByString:@" & "], @" don't match! ", self.game.pointsScored, @" point penalty!"];
-        [self.game.lastFlip removeAllObjects];
     } else if ([self.game.lastFlip count] && self.game.pointsScored == 1) {
         self.lastFlipResult.text = [NSString stringWithFormat:@"Flipped up %@", [self.game.lastFlip lastObject]];
-        [self.game.lastFlip removeLastObject];
+    }
+
+    [self.game.lastFlip removeAllObjects];
+}
+
+- (void)viewHistoryAtIndex:(NSUInteger)atIndex
+{
+    // Create an array from our dictionary of history and use the index from the slider
+    NSArray *pointInHistory = [self.game.flipHistory valueForKey:[NSString stringWithFormat:@"%d", atIndex]];
+    for (Card *card in pointInHistory) {
+        if ([pointInHistory count] == 1) {
+            self.lastFlipResult.text = [NSString stringWithFormat:@"Flipped up %@", card.contents];
+        }
+        
+        self.lastFlipResult.alpha = (atIndex != [self.game.flipHistory count] - 1 ? 0.3 : 1.0);
     }
 }
 
@@ -90,6 +102,10 @@
     self.flipCount++;
     // Set the toggle game difficulty switch to disabled
     self.gameDifficultySwitch.enabled = NO;
+    // Change our max value of our slider
+    self.historySlider.maximumValue = [self.game.flipHistory count] - 1;
+    // Change our current value to max as well
+    self.historySlider.value = [self.game.flipHistory count] - 1;
     // Update our UI
     [self updateUI];
 }
@@ -107,11 +123,21 @@
     [self updateUI];
     // Enable user to toggle the game difficulty after dealing
     self.gameDifficultySwitch.enabled = YES;
+    // Change our max value of our slider
+    self.historySlider.maximumValue = 0;
+    // Change our current value to max as well
+    self.historySlider.value = 0;
 }
 
 - (IBAction)toggleGameType:(UISwitch *)sender
 {
 
+}
+
+- (IBAction)viewHistory:(UISlider *)sender
+{
+    // Get the point in history with the index as our slider value
+    [self viewHistoryAtIndex:roundl([sender value])];
 }
 
 @end
