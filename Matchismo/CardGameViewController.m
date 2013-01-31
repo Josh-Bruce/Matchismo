@@ -76,12 +76,23 @@
 - (void)viewHistoryAtIndex:(NSUInteger)atIndex
 {
     // Create an array from our dictionary of history and use the index from the slider
-    NSArray *pointInHistory = [self.game.flipHistory valueForKey:[NSString stringWithFormat:@"%d", atIndex]];
-    for (Card *card in pointInHistory) {
+    NSMutableArray *pointInHistory = [[self.game.flipHistory valueForKey:[NSString stringWithFormat:@"%d", atIndex]] mutableCopy];
+    // Get the points score from the end of the array
+    NSString  *points = [pointInHistory lastObject];
+    // Remove the points from the end of the array
+    [pointInHistory removeObjectAtIndex:[pointInHistory count] - 1];
+    // Go through each combination
+    if ([pointInHistory count]) {
         if ([pointInHistory count] == 1) {
-            self.lastFlipResult.text = [NSString stringWithFormat:@"Flipped up %@", card.contents];
+            self.lastFlipResult.text = [NSString stringWithFormat:@"Flipped up %@", [pointInHistory lastObject]];
+        } else if ([pointInHistory count] == 2 && [points isEqualToString:@"16"]) {
+            self.lastFlipResult.text = [NSString stringWithFormat:@"Matched %@%@%@%@", [pointInHistory componentsJoinedByString:@" & "], @"for ", points, @" points"];
+        } else if ([pointInHistory count] == 2 && [points isEqualToString:@"4"]) {
+            self.lastFlipResult.text = [NSString stringWithFormat:@"Matched %@%@%@%@", [pointInHistory componentsJoinedByString:@" & "], @"for ", points, @" points"];
+        } else if ([pointInHistory count] == 2 && [points isEqualToString:@"2"]) {
+            self.lastFlipResult.text = [NSString stringWithFormat:@"%@%@%@%@", [pointInHistory componentsJoinedByString:@" & "], @" don't match! ", points, @" point penalty!"];
         }
-        
+        // Set alpha to 0.3 so users know its history
         self.lastFlipResult.alpha = (atIndex != [self.game.flipHistory count] - 1 ? 0.3 : 1.0);
     }
 }

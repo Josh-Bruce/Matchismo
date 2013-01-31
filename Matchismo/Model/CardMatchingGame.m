@@ -64,14 +64,14 @@
                         self.score += matchScore * MATCH_BONUS;
                         self.pointsScored = matchScore * MATCH_BONUS;
                         [self.lastFlip addObjectsFromArray:@[card.contents, otherCard.contents]];
-                        [self.flipHistory setValue:@[card, otherCard] forKey:[NSString stringWithFormat:@"%d", self.historyCount]];
+                        [self.flipHistory setValue:@[card.contents, otherCard.contents, [NSString stringWithFormat:@"%d", self.pointsScored]] forKey:[NSString stringWithFormat:@"%d", self.historyCount]];
                         self.historyCount++;
                     } else {
                         otherCard.faceUp = NO;
                         self.score -= MISMATCH_PENALTY;
                         self.pointsScored = MISMATCH_PENALTY;
                         [self.lastFlip addObjectsFromArray:@[card.contents, otherCard.contents]];
-                        [self.flipHistory setValue:@[card, otherCard] forKey:[NSString stringWithFormat:@"%d", self.historyCount]];
+                        [self.flipHistory setValue:@[card.contents, otherCard.contents, [NSString stringWithFormat:@"%d", self.pointsScored]] forKey:[NSString stringWithFormat:@"%d", self.historyCount]];
                         self.historyCount++;
                     }
                     break;
@@ -81,7 +81,7 @@
             if (![self.lastFlip count]) {
                 self.pointsScored = FLIP_COST;
                 [self.lastFlip addObject:card.contents];
-                [self.flipHistory setValue:@[card] forKey:[NSString stringWithFormat:@"%d", self.historyCount]];
+                [self.flipHistory setValue:@[card.contents, [NSString stringWithFormat:@"%d", self.pointsScored]] forKey:[NSString stringWithFormat:@"%d", self.historyCount]];
                 self.historyCount++;
             }
         }
