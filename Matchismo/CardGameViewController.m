@@ -39,6 +39,22 @@
     [self updateUI];
 }
 
+- (void)resetGame
+{
+    // Create a new game by alloc and init a new set of cards
+    self.game = nil;
+    // Set our flipcount to 0
+    self.flipCount = 0;
+    // Set the textlabel to nil
+    self.lastFlipResult.text = nil;
+    // Enable user to toggle the game difficulty after dealing
+    self.gameDifficultySwitch.enabled = YES;
+    // Change our max value of our slider
+    self.historySlider.maximumValue = 0;
+    // Change our current value to max as well
+    self.historySlider.value = 0;
+}
+
 - (void)updateUI
 {
     for (UIButton *cardButton in self.cardButtons) {
@@ -57,6 +73,8 @@
             [cardButton setImage:nil forState:UIControlStateNormal];
         }
     }
+    
+    // Set the score of the game in the label
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     
     // Using the cards in an NSMutableArray inserted by the model and displaying their points
@@ -70,6 +88,7 @@
         self.lastFlipResult.text = [NSString stringWithFormat:@"Flipped up %@", [self.game.lastFlip lastObject]];
     }
 
+    // Remove all objects from the last flip
     [self.game.lastFlip removeAllObjects];
 }
 
@@ -123,21 +142,10 @@
 
 - (IBAction)dealNewGame:(UIButton *)sender
 {
-    // Create a new game by alloc and init a new set of cards
-    //self.game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[[PlayingCardDeck alloc] init]];
-    self.game = nil;
-    // Set our flipcount to 0
-    self.flipCount = 0;
-    // Set the textlabel to nil
-    self.lastFlipResult.text = nil;
     // Update our UI
     [self updateUI];
-    // Enable user to toggle the game difficulty after dealing
-    self.gameDifficultySwitch.enabled = YES;
-    // Change our max value of our slider
-    self.historySlider.maximumValue = 0;
-    // Change our current value to max as well
-    self.historySlider.value = 0;
+    // Reset our game settings
+    [self resetGame];
 }
 
 - (IBAction)toggleGameType:(UISwitch *)sender
@@ -148,6 +156,7 @@
 - (IBAction)viewHistory:(UISlider *)sender
 {
     // Get the point in history with the index as our slider value
+    // roundl is used to get an integer value from the slider for our index
     [self viewHistoryAtIndex:roundl([sender value])];
 }
 
