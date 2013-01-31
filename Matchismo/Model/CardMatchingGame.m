@@ -62,27 +62,28 @@
                         card.unplayable = YES;
                         otherCard.unplayable = YES;
                         self.score += matchScore * MATCH_BONUS;
-                        self.pointsScored = matchScore * MATCH_BONUS;
+                        // Add the two cards that made a match and their points to the last flips array
                         [self.lastFlip addObjectsFromArray:@[card.contents, otherCard.contents]];
-                        [self.flipHistory setValue:@[card.contents, otherCard.contents, [NSString stringWithFormat:@"%d", self.pointsScored]] forKey:[NSString stringWithFormat:@"%d", self.historyCount]];
-                        self.historyCount++;
+                        // Also add these two cards and their points to the history array
+                        [self.flipHistory setValue:@[card.contents, otherCard.contents, [NSString stringWithFormat:@"%d", matchScore * MATCH_BONUS]] forKey:[NSString stringWithFormat:@"%d", self.historyCount++]];
                     } else {
                         otherCard.faceUp = NO;
                         self.score -= MISMATCH_PENALTY;
-                        self.pointsScored = MISMATCH_PENALTY;
+                        // Add the two cards that made a match and their points to the last flips array
                         [self.lastFlip addObjectsFromArray:@[card.contents, otherCard.contents]];
-                        [self.flipHistory setValue:@[card.contents, otherCard.contents, [NSString stringWithFormat:@"%d", self.pointsScored]] forKey:[NSString stringWithFormat:@"%d", self.historyCount]];
-                        self.historyCount++;
+                        // Also add these two cards and their points to the history array
+                        [self.flipHistory setValue:@[card.contents, otherCard.contents, [NSString stringWithFormat:@"%d", MISMATCH_PENALTY]] forKey:[NSString stringWithFormat:@"%d", self.historyCount++]];
                     }
                     break;
                 }
             }
             self.score -= FLIP_COST;
+            // Only perform this if there is nothing in the last flipped array
             if (![self.lastFlip count]) {
-                self.pointsScored = FLIP_COST;
+                // Add the flipped card to the last flipped card array
                 [self.lastFlip addObject:card.contents];
-                [self.flipHistory setValue:@[card.contents, [NSString stringWithFormat:@"%d", self.pointsScored]] forKey:[NSString stringWithFormat:@"%d", self.historyCount]];
-                self.historyCount++;
+                // Also add that flipped card to the history array
+                [self.flipHistory setValue:@[card.contents, [NSString stringWithFormat:@"%d", FLIP_COST]] forKey:[NSString stringWithFormat:@"%d", self.historyCount++]];
             }
         }
         card.faceUp = !card.isFaceUp;
