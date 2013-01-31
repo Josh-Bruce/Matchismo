@@ -58,6 +58,7 @@
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     
+    // Using the cards in an NSMutableArray inserted by the model and displaying their points
     if ([self.game.lastFlip count] && self.game.pointsScored == 16) {
         self.lastFlipResult.text = [NSString stringWithFormat:@"Matched %@%@%d%@", [self.game.lastFlip componentsJoinedByString:@" & "], @"for ", self.game.pointsScored, @" points"];
         [self.game.lastFlip removeAllObjects];
@@ -87,6 +88,8 @@
     [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
     // Incremenet out flip countere
     self.flipCount++;
+    // Set the toggle game difficulty switch to disabled
+    self.gameDifficultySwitch.enabled = NO;
     // Update our UI
     [self updateUI];
 }
@@ -103,7 +106,7 @@
     // Update our UI
     [self updateUI];
     // Enable user to toggle the game difficulty after dealing
-    
+    self.gameDifficultySwitch.enabled = YES;
 }
 
 - (IBAction)toggleGameType:(UISwitch *)sender
