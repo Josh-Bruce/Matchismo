@@ -49,12 +49,11 @@
         
         // Setting the background of the card
         // Un-comment if you wish you to use the playing card background
-//        UIImage *cardBack = [UIImage imageNamed:@"playing_card.png"];
-//        [cardButton setTitle:@"" forState:UIControlStateNormal];
-//        [cardButton setImage:cardBack forState:UIControlStateNormal];
-//        if (card .isFaceUp) {
-//            [cardButton setImage:nil forState:UIControlStateNormal];
-//        }
+        [cardButton setImage:[UIImage imageNamed:@"playing_card.png"] forState:UIControlStateNormal];
+        [cardButton setTitle:@"" forState:UIControlStateNormal];
+        if (card .isFaceUp) {
+            [cardButton setImage:nil forState:UIControlStateNormal];
+        }
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     
