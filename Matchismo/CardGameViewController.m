@@ -57,6 +57,11 @@
 //        }
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    
+    if ([self.game.lastFlip count] == 2) {
+        self.lastFlipResult.text = [NSString stringWithFormat:@"Matched %@%@%d%@", [self.game.lastFlip componentsJoinedByString:@" & "], @"for ", self.game.pointsScored, @" points"];
+        [self.game.lastFlip removeAllObjects];
+    }
 }
 
 - (void)setFlipCount:(int)flipCount
@@ -84,6 +89,8 @@
     self.game = nil;
     // Set our flipcount to 0
     self.flipCount = 0;
+    // Set the textlabel to nil
+    self.lastFlipResult.text = nil;
     // Update our UI
     [self updateUI];
 }

@@ -10,6 +10,7 @@
 
 @interface CardMatchingGame ()
 @property (readwrite, nonatomic) int score;
+@property (readwrite, nonatomic) int pointsScored;
 @property (strong, nonatomic) NSMutableArray *cards; // of Card
 @end
 
@@ -23,6 +24,15 @@
     }
     
     return _cards;
+}
+
+- (NSMutableArray *)lastFlip
+{
+    if (!_lastFlip) {
+        _lastFlip = [[NSMutableArray alloc] init];
+    }
+    
+    return _lastFlip;
 }
 
 #define MATCH_BONUS 4
@@ -42,6 +52,8 @@
                         card.unplayable = YES;
                         otherCard.unplayable = YES;
                         self.score += matchScore * MATCH_BONUS;
+                        self.pointsScored = matchScore * MATCH_BONUS;
+                        [self.lastFlip addObjectsFromArray:@[card.contents, otherCard.contents]];
                     } else {
                         otherCard.faceUp = NO;
                         self.score -= MISMATCH_PENALTY;

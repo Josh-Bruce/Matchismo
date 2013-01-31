@@ -13,6 +13,8 @@
 @interface CardMatchingGame : NSObject
 
 @property (readonly, nonatomic) int score;
+@property (readonly, nonatomic) int pointsScored;
+@property (strong, nonatomic) NSMutableArray *lastFlip;
 
 // Designated initializer
 - (id)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck;
