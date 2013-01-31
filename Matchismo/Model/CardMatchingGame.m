@@ -57,11 +57,17 @@
                     } else {
                         otherCard.faceUp = NO;
                         self.score -= MISMATCH_PENALTY;
+                        self.pointsScored = MISMATCH_PENALTY;
+                        [self.lastFlip addObjectsFromArray:@[card.contents, otherCard.contents]];
                     }
                     break;
                 }
             }
             self.score -= FLIP_COST;
+            if (![self.lastFlip count]) {
+                [self.lastFlip addObject:card.contents];
+                self.pointsScored = FLIP_COST;
+            }
         }
         card.faceUp = !card.isFaceUp;
     }

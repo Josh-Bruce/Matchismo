@@ -58,9 +58,18 @@
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     
-    if ([self.game.lastFlip count] == 2) {
+    if ([self.game.lastFlip count] && self.game.pointsScored == 16) {
         self.lastFlipResult.text = [NSString stringWithFormat:@"Matched %@%@%d%@", [self.game.lastFlip componentsJoinedByString:@" & "], @"for ", self.game.pointsScored, @" points"];
         [self.game.lastFlip removeAllObjects];
+    } else if ([self.game.lastFlip count] && self.game.pointsScored == 4) {
+        self.lastFlipResult.text = [NSString stringWithFormat:@"Matched %@%@%d%@", [self.game.lastFlip componentsJoinedByString:@" & "], @"for ", self.game.pointsScored, @" points"];
+        [self.game.lastFlip removeAllObjects];
+    } else if ([self.game.lastFlip count] && self.game.pointsScored == 2) {
+        self.lastFlipResult.text = [NSString stringWithFormat:@"%@%@%d%@", [self.game.lastFlip componentsJoinedByString:@" & "], @" don't match! ", self.game.pointsScored, @" point penalty!"];
+        [self.game.lastFlip removeAllObjects];
+    } else if ([self.game.lastFlip count] && self.game.pointsScored == 1) {
+        self.lastFlipResult.text = [NSString stringWithFormat:@"Flipped up %@", [self.game.lastFlip lastObject]];
+        [self.game.lastFlip removeLastObject];
     }
 }
 
