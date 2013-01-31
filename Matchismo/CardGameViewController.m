@@ -71,7 +71,8 @@
 - (IBAction)dealNewGame:(UIButton *)sender
 {
     // Create a new game by alloc and init a new set of cards
-    self.game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[[PlayingCardDeck alloc] init]];
+    //self.game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[[PlayingCardDeck alloc] init]];
+    self.game = nil;
     // Set our flipcount to 0
     self.flipCount = 0;
     // Update our UI
