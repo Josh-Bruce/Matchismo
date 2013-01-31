@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2033534F16BA71DA00C790D4 /* playing_card.png in Resources */ = {isa = PBXBuildFile; fileRef = 2033534E16BA71DA00C790D4 /* playing_card.png */; };
 		20658BAE16B95C2F00E339D5 /* CardMatchingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 20658BAD16B95C2F00E339D5 /* CardMatchingGame.m */; };
 		20EB741B16B6B0430089BC2D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20EB741A16B6B0430089BC2D /* UIKit.framework */; };
 		20EB741D16B6B0430089BC2D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20EB741C16B6B0430089BC2D /* Foundation.framework */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2033534E16BA71DA00C790D4 /* playing_card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playing_card.png; sourceTree = "<group>"; };
 		20658BAC16B95C2F00E339D5 /* CardMatchingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardMatchingGame.h; path = Model/CardMatchingGame.h; sourceTree = "<group>"; };
 		20658BAD16B95C2F00E339D5 /* CardMatchingGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardMatchingGame.m; path = Model/CardMatchingGame.m; sourceTree = "<group>"; };
 		20EB741616B6B0430089BC2D /* Matchismo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Matchismo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,6 +112,7 @@
 		20EB742116B6B0430089BC2D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2033534E16BA71DA00C790D4 /* playing_card.png */,
 				20EB742916B6B0430089BC2D /* CardGameAppDelegate.h */,
 				20EB742A16B6B0430089BC2D /* CardGameAppDelegate.m */,
 				20EB742216B6B0430089BC2D /* Matchismo-Info.plist */,
@@ -197,6 +200,7 @@
 				20EB742F16B6B0440089BC2D /* Default@2x.png in Resources */,
 				20EB743116B6B0440089BC2D /* Default-568h@2x.png in Resources */,
 				20EB743416B6B0440089BC2D /* MainStoryboard.storyboard in Resources */,
+				2033534F16BA71DA00C790D4 /* playing_card.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
