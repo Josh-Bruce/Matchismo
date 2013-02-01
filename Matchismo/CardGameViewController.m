@@ -68,52 +68,29 @@
         cardButton.alpha = (card.isUnplayable ? 0.3 : 1.0);
         
         // Setting the background of the card
-        // Un-comment if you wish you to use the playing card background
         [cardButton setImage:[UIImage imageNamed:@"playing_card.png"] forState:UIControlStateNormal];
         [cardButton setTitle:@"" forState:UIControlStateNormal];
         if (card .isFaceUp) {
+            // Setting to image to nil if the card isFaceUp
             [cardButton setImage:nil forState:UIControlStateNormal];
         }
     }
     
     // Set the score of the game in the label
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    
-    // Using the cards in an NSMutableArray inserted by the model and displaying their points
-    if ([self.game.lastFlip count] && self.game.pointsScored == 16) {
-        self.lastFlipResult.text = [NSString stringWithFormat:@"Matched %@%@%d%@", [self.game.lastFlip componentsJoinedByString:@" & "], @"for ", self.game.pointsScored, @" points"];
-    } else if ([self.game.lastFlip count] && self.game.pointsScored == 4) {
-        self.lastFlipResult.text = [NSString stringWithFormat:@"Matched %@%@%d%@", [self.game.lastFlip componentsJoinedByString:@" & "], @"for ", self.game.pointsScored, @" points"];
-    } else if ([self.game.lastFlip count] && self.game.pointsScored == 2) {
-        self.lastFlipResult.text = [NSString stringWithFormat:@"%@%@%d%@", [self.game.lastFlip componentsJoinedByString:@" & "], @" don't match! ", self.game.pointsScored, @" point penalty!"];
-    } else if ([self.game.lastFlip count] && self.game.pointsScored == 1) {
-        self.lastFlipResult.text = [NSString stringWithFormat:@"Flipped up %@", [self.game.lastFlip lastObject]];
-    }
-
-    // Remove all objects from the last flip
-    [self.game.lastFlip removeAllObjects];
+    // Update last move label
+    self.lastFlipResult.text = self.game.lastMoveDescription;
+    // Make sure the alpha is 1 on our label
+    self.lastFlipResult.alpha = 1.0;
 }
 
 - (void)viewHistoryAtIndex:(NSUInteger)atIndex
 {
-    // Create an array from our dictionary of history and use the index from the slider
-    NSMutableArray *pointInHistory = [[self.game.flipHistory valueForKey:[NSString stringWithFormat:@"%d", atIndex]] mutableCopy];
-    // Get the points score from the end of the array
-    NSString  *points = [pointInHistory lastObject];
-    // Remove the points from the end of the array
-    [pointInHistory removeObjectAtIndex:[pointInHistory count] - 1];
-    // Go through each combination
-    if ([pointInHistory count]) {
-        if ([pointInHistory count] == 1) {
-            self.lastFlipResult.text = [NSString stringWithFormat:@"Flipped up %@", [pointInHistory lastObject]];
-        } else if ([pointInHistory count] == 2 && [points isEqualToString:@"16"]) {
-            self.lastFlipResult.text = [NSString stringWithFormat:@"Matched %@%@%@%@", [pointInHistory componentsJoinedByString:@" & "], @"for ", points, @" points"];
-        } else if ([pointInHistory count] == 2 && [points isEqualToString:@"4"]) {
-            self.lastFlipResult.text = [NSString stringWithFormat:@"Matched %@%@%@%@", [pointInHistory componentsJoinedByString:@" & "], @"for ", points, @" points"];
-        } else if ([pointInHistory count] == 2 && [points isEqualToString:@"2"]) {
-            self.lastFlipResult.text = [NSString stringWithFormat:@"%@%@%@%@", [pointInHistory componentsJoinedByString:@" & "], @" don't match! ", points, @" point penalty!"];
-        }
-        // Set alpha to 0.3 so users know its history
+    // Make sure there is some history first!
+    if ([self.game.flipHistory count]) {
+        // Set last move label to our point in history
+        self.lastFlipResult.text = [self.game.flipHistory valueForKey:[NSString stringWithFormat:@"%d", atIndex]];
+        // Set alpha to 0.3 so users know its history for all of the past and not the current move
         self.lastFlipResult.alpha = (atIndex != [self.game.flipHistory count] - 1 ? 0.3 : 1.0);
     }
 }
@@ -152,13 +129,8 @@
 
 - (IBAction)toggleGameType:(UISwitch *)sender
 {
-    if (sender.isOn) {
-        // Turn the 3 match game on (Harder)
-        self.game.threeCardMatch = YES;
-    } else {
-        // Turn the 3 match game off (Easier)
-        self.game.threeCardMatch = NO;
-    }
+    // Turning the three card match game on and off
+    self.game.threeCardMatch = (sender.isOn ? YES : NO);
 }
 
 - (IBAction)viewHistory:(UISlider *)sender

@@ -14,8 +14,7 @@
 
 @property (nonatomic, getter=isThreeCardMatch) BOOL threeCardMatch;
 @property (readonly, nonatomic) int score;
-@property (readonly, nonatomic) int pointsScored;
-@property (strong, nonatomic) NSMutableArray *lastFlip;
+@property (strong, nonatomic) NSString *lastMoveDescription;
 @property (strong, nonatomic) NSMutableDictionary *flipHistory;
 
 // Designated initializer

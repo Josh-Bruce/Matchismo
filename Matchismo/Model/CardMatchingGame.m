@@ -10,7 +10,6 @@
 
 @interface CardMatchingGame ()
 @property (readwrite, nonatomic) int score;
-@property (readwrite, nonatomic) int pointsScored;
 @property (nonatomic) int historyCount;
 @property (strong, nonatomic) NSMutableArray *cards; // of Card
 @end
@@ -25,15 +24,6 @@
     }
     
     return _cards;
-}
-
-- (NSMutableArray *)lastFlip
-{
-    if (!_lastFlip) {
-        _lastFlip = [[NSMutableArray alloc] init];
-    }
-    
-    return _lastFlip;
 }
 
 - (NSMutableDictionary *)flipHistory
@@ -62,35 +52,23 @@
                         card.unplayable = YES;
                         otherCard.unplayable = YES;
                         self.score += matchScore * MATCH_BONUS;
-                        // Keep track of the points scored for match
-                        self.pointsScored = matchScore * MATCH_BONUS;
-                        // Add the two cards that made a match and their points to the last flips array
-                        [self.lastFlip addObjectsFromArray:@[card.contents, otherCard.contents]];
-                        // Also add these two cards and their points to the history array
-                        [self.flipHistory setValue:@[card.contents, otherCard.contents, [NSString stringWithFormat:@"%d", self.pointsScored]] forKey:[NSString stringWithFormat:@"%d", self.historyCount++]];
+                        // Create the description of the move
+                        self.lastMoveDescription = [NSString stringWithFormat:@"Matched %@%@%@%@%d%@", card.contents, @" & ", otherCard.contents, @" for ", matchScore * MATCH_BONUS, @" points"];
                     } else {
                         otherCard.faceUp = NO;
                         self.score -= MISMATCH_PENALTY;
-                        // Keep track of the points scored for match
-                        self.pointsScored = MATCH_BONUS;
-                        // Add the two cards that made a match and their points to the last flips array
-                        [self.lastFlip addObjectsFromArray:@[card.contents, otherCard.contents]];
-                        // Also add these two cards and their points to the history array
-                        [self.flipHistory setValue:@[card.contents, otherCard.contents, [NSString stringWithFormat:@"%d", self.pointsScored]] forKey:[NSString stringWithFormat:@"%d", self.historyCount++]];
-                    }
+                        // Create the description of the move
+                        self.lastMoveDescription = [NSString stringWithFormat:@"%@%@%@%@%d%@", card.contents, @" & ", otherCard.contents, @" don't match! ", MISMATCH_PENALTY, @" point penalty!"];
+                    } 
                     break;
+                } else {
+                    // Create the description of the move
+                    self.lastMoveDescription = [NSString stringWithFormat:@"Flipped up %@", card.contents];
                 }
             }
             self.score -= FLIP_COST;
-            // Only perform this if there is nothing in the last flipped array
-            if (![self.lastFlip count]) {
-                // Keep track of the points scored for match
-                self.pointsScored = FLIP_COST;
-                // Add the flipped card to the last flipped card array
-                [self.lastFlip addObject:card.contents];
-                // Also add that flipped card to the history array
-                [self.flipHistory setValue:@[card.contents, [NSString stringWithFormat:@"%d", self.pointsScored]] forKey:[NSString stringWithFormat:@"%d", self.historyCount++]];
-            }
+            // Add the description of the move to our dictionary of history
+            [self.flipHistory setValue:self.lastMoveDescription forKey:[NSString stringWithFormat:@"%d", self.historyCount++]];
         }
         card.faceUp = !card.isFaceUp;
     }
