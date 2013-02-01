@@ -52,17 +52,17 @@
                         card.unplayable = YES;
                         otherCard.unplayable = YES;
                         self.score += matchScore * MATCH_BONUS;
-                        // Create the description of the move
+                        // Create the description of the move when there is a match
                         self.lastMoveDescription = [NSString stringWithFormat:@"Matched %@%@%@%@%d%@", card.contents, @" & ", otherCard.contents, @" for ", matchScore * MATCH_BONUS, @" points"];
                     } else {
                         otherCard.faceUp = NO;
                         self.score -= MISMATCH_PENALTY;
-                        // Create the description of the move
+                        // Create the description of the move when there is a mismatch
                         self.lastMoveDescription = [NSString stringWithFormat:@"%@%@%@%@%d%@", card.contents, @" & ", otherCard.contents, @" don't match! ", MISMATCH_PENALTY, @" point penalty!"];
                     } 
                     break;
                 } else {
-                    // Create the description of the move
+                    // Create the description of the move when a card is flipped up
                     self.lastMoveDescription = [NSString stringWithFormat:@"Flipped up %@", card.contents];
                 }
             }
